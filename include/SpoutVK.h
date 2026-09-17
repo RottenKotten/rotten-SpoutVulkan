@@ -18,12 +18,12 @@
 #	define _WINSOCKAPI_
 #include <vulkan/vulkan.hpp>
 
-#include "SpoutDX\SpoutCommon.h"
-#include "SpoutDX\SpoutDirectX.h"
-#include "SpoutDX\SpoutSenderNames.h"
-#include "SpoutDX\SpoutSharedMemory.h"
-#include "SpoutDX\SpoutFrameCount.h"
-#include "SpoutDX\SpoutUtils.h"
+#include "SpoutCommon.h"
+#include "SpoutDirectX.h"
+#include "SpoutSenderNames.h"
+#include "SpoutSharedMemory.h"
+#include "SpoutFrameCount.h"
+#include "SpoutUtils.h"
 
 class spoutVK {
 

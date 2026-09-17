@@ -1,0 +1,53 @@
+cmake_minimum_required(VERSION 3.15)
+
+project(
+SpoutVulkan
+VERSION 0.1.0
+LANGUAGES CXX
+)
+
+if(NOT WIN32)
+message(FATAL_ERROR "SpoutVulkan currently supports Windows only")
+endif()
+
+find_package(Vulkan REQUIRED)
+
+# Bundled Spout2 dependency.
+
+# Skip if the parent project already provides Spout_static.
+
+if(NOT TARGET Spout_static)
+set(SPOUT_BUILD_CMT OFF CACHE BOOL "" FORCE)
+set(SPOUT_BUILD_LIBRARY OFF CACHE BOOL "" FORCE)
+set(SPOUT_BUILD_SPOUTDX OFF CACHE BOOL "" FORCE)
+set(SKIP_INSTALL_ALL ON CACHE BOOL "" FORCE)
+
+
+add_subdirectory(Spout2 EXCLUDE_FROM_ALL)
+
+
+endif()
+
+add_library(SpoutVulkan STATIC
+src/SpoutVK.cpp
+)
+
+add_library(SpoutVulkan::SpoutVulkan ALIAS SpoutVulkan)
+
+target_compile_features(SpoutVulkan PUBLIC cxx_std_20)
+
+target_include_directories(SpoutVulkan
+PUBLIC
+$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
+
+target_link_libraries(SpoutVulkan
+PUBLIC
+Vulkan::Vulkan
+Spout_static
+)
+
+target_compile_definitions(SpoutVulkan
+PUBLIC
+VK_USE_PLATFORM_WIN32_KHR
+)
